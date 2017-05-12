@@ -11,11 +11,20 @@ import UIKit
 // MARK: - ViewController: UIViewController, UITextFieldDelegate
 
 class ViewController: UIViewController, UITextFieldDelegate {
+    
+    let cashText = CashTextFieldDelegate()
+    let lockableText = LockableTextFieldDelegate()
+    let zipCodeText = ZipCodeTextFieldDelegate()
+    
 
     // MARK: Outlets
     @IBOutlet weak var textField1: UITextField!
     @IBOutlet weak var textField2: UITextField!
     @IBOutlet weak var textField3: UITextField!
+
+    
+    @IBAction func lockText(_ sender: Any) {
+    }
 
     
     // MARK: Text Field Delegate objects
@@ -29,9 +38,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
         
         // Set the three delegates
-        self.textField1.delegate = emojiDelegate
-        self.textField2.delegate = colorizerDelegate
-        self.textField3.delegate = self
+        self.textField1.delegate = cashText
+        self.textField2.delegate = lockableText
+        self.textField3.delegate = zipCodeText
     }
     
     // MARK: Text Field Delegate Methods
