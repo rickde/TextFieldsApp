@@ -12,24 +12,18 @@ import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
-    let cashText = CashTextFieldDelegate()
-    let lockableText = LockableTextFieldDelegate()
-    let zipCodeText = ZipCodeTextFieldDelegate()
+    // MARK: Text Field Delegate objects
     
+    let zipCodeText = ZipCodeTextFieldDelegate()
+    let cashText = CashTextFieldDelegate()
 
     // MARK: Outlets
+    
     @IBOutlet weak var textField1: UITextField!
     @IBOutlet weak var textField2: UITextField!
     @IBOutlet weak var textField3: UITextField!
+    @IBOutlet weak var lockSwitch: UISwitch!
 
-    
-    @IBAction func lockText(_ sender: Any) {
-    }
-
-    
-    // MARK: Text Field Delegate objects
-    let emojiDelegate = EmojiTextFieldDelegate()
-    let colorizerDelegate = ColorizerTextFieldDelegate()
     
     // MARK: Life Cycle
     
@@ -38,19 +32,36 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
         
         // Set the three delegates
-        self.textField1.delegate = cashText
-        self.textField2.delegate = lockableText
-        self.textField3.delegate = zipCodeText
+        self.textField1.delegate = self.zipCodeText
+        self.textField2.delegate = self.cashText
+        self.textField3.delegate = self
+        
+        self.lockSwitch.setOn(false, animated: false)
     }
     
     // MARK: Text Field Delegate Methods
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return self.lockSwitch.isOn
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         
-
-        // returning true gives the text field permission to change its text
         return true;
     }
+    
+    // Mark: Actions
+    
+    @IBAction func toggleTheTextEditor(_ sender: AnyObject) {
+        if !(sender as! UISwitch).isOn {
+            self.textField3.resignFirstResponder()
+        }
+
+    }
+
 }
+
+
+
 
